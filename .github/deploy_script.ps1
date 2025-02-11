@@ -37,7 +37,7 @@ if ($service) {
     Write-Warning "Skipping service restart: Service '$serviceName' not found."
 }
 
-Update Nginx configuration (if needed)
+#Update Nginx configuration (if needed)
 try {
     if (Test-Path $nginxConfigPath) {
         $destDir = "C:\nginx\conf"
