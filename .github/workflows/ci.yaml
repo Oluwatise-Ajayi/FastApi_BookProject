@@ -41,7 +41,7 @@ jobs:
       - name: Deploy to Server
         run: |
           
-           powershell -ExecutionPolicy Bypass -File "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project\deploy_script.ps1"
+           powershell -ExecutionPolicy Bypass -File "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project"
 
       - name: Update Nginx Configuration
         run: |
