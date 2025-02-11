@@ -38,10 +38,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Deploy to Server
+      - name: Install PowerShell Core
+        run: pwsh -c "Write-Output 'Using PowerShell Core'"
+
+      - name: Run deployment script
+        shell: pwsh
         run: |
           
-           powershell -ExecutionPolicy Bypass -File "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project"
+          -ExecutionPolicy Bypass -File "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project\deploy_script.ps1"
+
+
+      # - name: Deploy to Server
+      #   run: |
+          
+      #      powershell -ExecutionPolicy Bypass -File "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project\deploy_script.ps1"
 
       - name: Update Nginx Configuration
         run: |
