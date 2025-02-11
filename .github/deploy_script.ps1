@@ -1,7 +1,8 @@
 # deploy_script.ps1
 
 # Define variables
-$repoPath = "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project"
+# $repoPath = "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project"
+$repoPath = "../"
 $serviceName = "FastApiService"
 $nginxConfigPath = "C:\Users\user\Documents\nginx-1.26.3\nginx-1.26.3\conf\nginx.conf"
 

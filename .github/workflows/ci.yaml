@@ -47,7 +47,7 @@ jobs:
 
       - name: Run deployment script
         shell: pwsh
-        working-directory: .github/workflows
+        working-directory: .github
         run: ./deploy_script.ps1
 
 
