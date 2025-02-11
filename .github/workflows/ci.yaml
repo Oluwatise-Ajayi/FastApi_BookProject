@@ -38,14 +38,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: List files in workspace
+        shell: pwsh
+        run: Get-ChildItem -Path . -Recurse
+
       - name: Install PowerShell Core
         run: pwsh -c "Write-Output 'Using PowerShell Core'"
 
       - name: Run deployment script
         shell: pwsh
         run: |
-          
-          pwsh -ExecutionPolicy Bypass -File "./deploy_script.ps1"
+          $scriptPath = Resolve-Path ./deploy_script.ps1
+          & $scriptPath
 
 
       # - name: Deploy to Server
