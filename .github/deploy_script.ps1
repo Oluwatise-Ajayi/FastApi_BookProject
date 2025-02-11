@@ -26,15 +26,16 @@ try {
     exit 1
 }
 
-# Restart the FastAPI application (assuming it's running as a service)
-try {
-    Stop-Service $serviceName
-    Start-Service $serviceName
-} catch {
-    Write-Error "Service restart failed: $_"
-    exit 1
-}
+# Check if service exists
+$service = Get-Service -Name $serviceName -ErrorAction SilentlyContinue
 
+# Restart only if the service exists
+if ($service) {
+    Restart-Service -Name $serviceName -Force
+    Write-Output "Service $serviceName restarted successfully."
+} else {
+    Write-Warning "Skipping service restart: Service '$serviceName' not found."
+}
 
 Update Nginx configuration (if needed)
 try {
