@@ -38,25 +38,25 @@ try {
 
 
 # Update Nginx configuration (if needed)
-try {
-    if (Test-Path $nginxConfigPath) {
-        $destDir = "C:\nginx\conf"
-        if (!(Test-Path $destDir)) {
-            New-Item -ItemType Directory -Path $destDir
-            -ErrorAction stop
-        }
-        Copy-Item $nginxConfigPath "$destDir\nginx.conf" -Force
-         -ErrorAction stop
-        & "C:\nginx\nginx.exe" -s reload  -ErrorAction stop
-    } else {
-        Write-Warning "Nginx configuration file not found: $nginxConfigPath"
-    }
-} catch {
-    Write-Error "Nginx configuration update failed: $($Error[0].Message)"
-    exit 1
-    Write-Error "Error details: $($Error[0].Exception)"
-    exit 1
-    Write-Error "Error category: $($Error[0].CategoryInfo)"
-    exit 1
-}
+# try {
+#     if (Test-Path $nginxConfigPath) {
+#         $destDir = "C:\nginx\conf"
+#         if (!(Test-Path $destDir)) {
+#             New-Item -ItemType Directory -Path $destDir
+#             -ErrorAction stop
+#         }
+#         Copy-Item $nginxConfigPath "$destDir\nginx.conf" -Force
+#          -ErrorAction stop
+#         & "C:\nginx\nginx.exe" -s reload  -ErrorAction stop
+#     } else {
+#         Write-Warning "Nginx configuration file not found: $nginxConfigPath"
+#     }
+# } catch {
+#     Write-Error "Nginx configuration update failed: $($Error[0].Message)"
+#     exit 1
+#     Write-Error "Error details: $($Error[0].Exception)"
+#     exit 1
+#     Write-Error "Error category: $($Error[0].CategoryInfo)"
+#     exit 1
+# }
 
