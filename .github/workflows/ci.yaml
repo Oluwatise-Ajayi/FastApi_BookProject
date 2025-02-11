@@ -47,9 +47,8 @@ jobs:
 
       - name: Run deployment script
         shell: pwsh
-        run: |
-          $scriptPath = Resolve-Path ./deploy_script.ps1
-          & $scriptPath
+        working-directory: .github/workflows
+        run: ./deploy_script.ps1
 
 
       # - name: Deploy to Server
