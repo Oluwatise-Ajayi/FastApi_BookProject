@@ -45,7 +45,7 @@ jobs:
         shell: pwsh
         run: |
           
-          -ExecutionPolicy Bypass -File "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project\deploy_script.ps1"
+          pwsh -ExecutionPolicy Bypass -File "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project\deploy_script.ps1"
 
 
       # - name: Deploy to Server

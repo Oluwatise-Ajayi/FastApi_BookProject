@@ -7,7 +7,7 @@ $nginxConfigPath = "/home/user/Documents/nginx-1.26.3/nginx-1.26.3/conf/nginx.co
 
 
 # Navigate to the application directory
-cd $repoPath
+Set-Location $repoPath
 
 # Pull the latest changes from the repository
 try {
