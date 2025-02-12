@@ -50,11 +50,15 @@ jobs:
         working-directory: .github
         run: ./deploy_script.ps1
 
+      - name: Install Nginx
+        shell: pwsh
+        run: choco install nginx -y
 
-      # - name: Deploy to Server
-      #   run: |
-          
-      #      powershell -ExecutionPolicy Bypass -File "C:\Users\user\Documents\HNG projects\FastApi_Book\fastapi-book-project\deploy_script.ps1"
+      - name: Add Nginx to PATH
+        shell: pwsh
+        run: |
+          $env:Path += ";C:\nginx"
+          nginx -v  # Check if nginx is recognized
 
       - name: Update Nginx Configuration
         run: |
