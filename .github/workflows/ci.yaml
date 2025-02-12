@@ -81,8 +81,8 @@ jobs:
       - name: Update Nginx Configuration
         shell: pwsh
         run: |
-          Copy-Item "C:\nginx\nginx-1.25.3\conf\nginx.conf" "C:\nginx\conf\nginx.conf" -Force
+          Copy-Item "C:\nginx\nginx-1.25.3\conf\nginx.conf" "C:\nginx\conf\nginx.conf" -Force C:\nginx\nginx-1.26.3\nginx.exe -s reload
       
-      - name: Start Nginx with Correct Config
-        shell: pwsh
-        run: C:\nginx\nginx-1.25.3\nginx.exe -c C:\nginx\nginx-1.25.3\conf\nginx.conf
+      # - name: Start Nginx with Correct Config
+      #   shell: pwsh
+      #   run: C:\nginx\nginx-1.25.3\nginx.exe -c C:\nginx\nginx-1.25.3\conf\nginx.conf
