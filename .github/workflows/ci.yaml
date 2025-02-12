@@ -27,7 +27,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        run: pytest  # This will execute the existing tests
+        run: pytest
 
   deploy:
     runs-on: windows-latest
@@ -71,47 +71,64 @@ jobs:
         shell: pwsh
         run: |
           $nginxDir = "C:\nginx\nginx-1.25.3"
+          
+          # Ensure logs directory exists
           if (!(Test-Path -Path "$nginxDir\logs")) {
+            Write-Output "⚠️ logs directory missing. Creating..."
             New-Item -ItemType Directory -Path "$nginxDir\logs" -Force
           }
+
+          # Ensure conf directory exists
           if (!(Test-Path -Path "$nginxDir\conf")) {
+            Write-Output "⚠️ conf directory missing. Creating..."
             New-Item -ItemType Directory -Path "$nginxDir\conf" -Force
+          }
+
+      - name: Fix Missing Log & PID Files
+        shell: pwsh
+        run: |
+          $nginxDir = "C:\nginx\nginx-1.25.3"
+
+          # Ensure error log file exists
+          if (!(Test-Path -Path "$nginxDir\logs\error.log")) {
+            Write-Output "⚠️ error.log missing. Creating..."
+            New-Item -ItemType File -Path "$nginxDir\logs\error.log" -Force | Out-Null
+          }
+
+          # Ensure nginx.pid file exists
+          if (!(Test-Path -Path "$nginxDir\logs\nginx.pid")) {
+            Write-Output "⚠️ nginx.pid missing. Creating..."
+            New-Item -ItemType File -Path "$nginxDir\logs\nginx.pid" -Force | Out-Null
           }
 
       - name: Debug Nginx Config Path
         shell: pwsh
         run: |
-          if (Test-Path -Path "C:\nginx\nginx-1.25.3\conf\nginx.conf") {
+          $nginxDir = "C:\nginx\nginx-1.25.3"
+          if (Test-Path -Path "$nginxDir\conf\nginx.conf") {
             Write-Output "✅ nginx.conf file exists."
           } else {
-            Write-Warning "⚠️ nginx.conf file NOT found here! Creating a default configuration."
-            echo 'server { listen 80; server_name localhost; location / { root html; index index.html; } }' | Out-File -FilePath "C:\nginx\nginx-1.25.3\conf\nginx.conf"
+            Write-Warning "⚠️ nginx.conf file NOT found! Creating a default configuration."
+            echo 'pid logs/nginx.pid;
+                  error_log logs/error.log;
+                  events { worker_connections 1024; }
+                  http {
+                    server {
+                      listen 80;
+                      server_name localhost;
+                      location / { root html; index index.html; }
+                    }
+                  }' | Out-File -FilePath "$nginxDir\conf\nginx.conf"
           }
 
-      - name: Fix Nginx Error Log Issue
-        shell: pwsh
-        run: |
-            $nginxDir = "C:\nginx\nginx-1.25.3"
-            New-Item -ItemType File -Path "$nginxDir\logs\error.log" -Force | Out-Null
-            Write-Output "✅ Ensured error log file exists."
-  
       - name: Update Nginx Configuration & Reload
         shell: pwsh
         run: |
-            $nginxDir = "C:\nginx\nginx-1.25.3"
-            Write-Output "🔄 Backing up old configuration..."
-            Copy-Item -Path "$nginxDir\conf\nginx.conf" -Destination "$nginxDir\conf\nginx.conf.bak" -Force
-            
-            Start-Sleep -s 2
-            
-            Write-Output "♻️ Reloading Nginx..."
-            & "$nginxDir\nginx.exe" -c "$nginxDir\conf\nginx.conf" -s reload
-  
-  
-  
-  
-  
-  
-  
-  
-  
+          $nginxDir = "C:\nginx\nginx-1.25.3"
+          Write-Output "🔄 Backing up old configuration..."
+          Copy-Item -Path "$nginxDir\conf\nginx.conf" -Destination "$nginxDir\conf\nginx.conf.bak" -Force
+          
+          Start-Sleep -s 2
+          
+          Write-Output "♻️ Reloading Nginx..."
+          & "$nginxDir\nginx.exe" -c "$nginxDir\conf\nginx.conf" -s reload
