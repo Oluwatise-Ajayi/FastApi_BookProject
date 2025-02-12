@@ -54,8 +54,4 @@ try {
 } catch {
     Write-Error "Nginx configuration update failed: $($Error[0].Message)"
     exit 1
-    Write-Error "Error details: $($Error[0].Exception)"
-    exit 1
-    Write-Error "Error category: $($Error[0].CategoryInfo)"
-    exit 1
  }

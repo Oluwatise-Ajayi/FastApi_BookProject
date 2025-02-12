@@ -17,28 +17,28 @@ This project is a RESTful API built with FastAPI for managing a book collection.
 
 ```
 fastapi-book-project/
-├── api/
-│   ├── db/
+├── api/                     # Contains API-related code
+│   ├── db/                 # Database-related files
 │   │   ├── __init__.py
 │   │   └── schemas.py      # Data models and in-memory database
-│   ├── routes/
+│   ├── routes/             # Route handlers for API endpoints
 │   │   ├── __init__.py
 │   │   └── books.py        # Book route handlers
 │   └── router.py           # API router configuration
-├── core/
+├── core/                    # Core application logic
 │   ├── __init__.py
-│   └── config.py           # Application settings
-├── tests/
+│   └── config.py           # Application settings and configuration
+├── tests/                   # Test cases for the application
 │   ├── __init__.py
 │   └── test_books.py       # API endpoint tests
 ├── main.py                 # Application entry point
 ├── requirements.txt        # Project dependencies
-└── README.md
+└── README.md               # Project documentation
 ```
 
 ## Technologies Used
 
-- Python 3.12
+- Python 3.13
 - FastAPI
 - Pydantic
 - pytest
@@ -49,7 +49,7 @@ fastapi-book-project/
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/hng12-devbotops/fastapi-book-project.git
+git clone https://github.com/Oluwatise-Ajayi/FastApi_BookProject.git
 cd fastapi-book-project
 ```
 
@@ -76,8 +76,24 @@ uvicorn main:app
 
 2. Access the API documentation:
 
-- Swagger UI: http://localhost:8000/docs
-- ReDoc: http://localhost:8000/redoc
+- Swagger UI: http://localhost:3000/docs
+- ReDoc: http://localhost:3000/redoc
+
+
+## Deployment Instructions
+To deploy the application, follow these steps:
+
+1. Navigate to the project directory:
+
+```bash
+cd path/to/fastapi-book-project
+```
+
+2. Run the deployment script: 
+
+```bash
+powershell -ExecutionPolicy Bypass -File deploy_script.ps1
+```
 
 ## API Endpoints
 
