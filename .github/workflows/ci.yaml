@@ -62,4 +62,4 @@ jobs:
       - name: Update Nginx Configuration
         run: |
           # Update Nginx configuration if needed
-            powershell -ExecutionPolicy Bypass -Command "Copy-Item 'C:\Users\user\Documents\nginx-1.26.3\nginx-1.26.3\conf\nginx.conf' 'C:\nginx\conf\nginx.conf' -Force; nginx -s reload"
+            Copy-Item 'C:\nginx\nginx-1.26.3\conf\nginx.conf' 'C:\nginx\conf\nginx.conf' -Force;  C:\nginx\nginx-1.26.3\nginx.exe -s reload"
