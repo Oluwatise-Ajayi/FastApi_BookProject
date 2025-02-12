@@ -59,16 +59,30 @@ jobs:
       - name: Check Nginx Version
         run: C:\nginx\nginx-1.25.3\nginx.exe -v
 
-      - name: Ensure Nginx Config Directory Exists
+      - name: Ensure Nginx Directories Exist
         shell: pwsh
         run: |
+          if (!(Test-Path -Path "C:\nginx\logs")) {
+            New-Item -ItemType Directory -Path "C:\nginx\logs"
+          }
           if (!(Test-Path -Path "C:\nginx\conf")) {
             New-Item -ItemType Directory -Path "C:\nginx\conf"
           }
       
-
+      - name: Debug Nginx Config Path
+        shell: pwsh
+        run: |
+          if (Test-Path -Path "C:\nginx\nginx-1.25.3\conf\nginx.conf") {
+            Write-Output "✅ Source file exists."
+          } else {
+            Write-Error "❌ Source file NOT found! Check if Nginx is installed correctly."
+          }
+      
       - name: Update Nginx Configuration
         shell: pwsh
         run: |
           Copy-Item "C:\nginx\nginx-1.25.3\conf\nginx.conf" "C:\nginx\conf\nginx.conf" -Force
-          C:\nginx\nginx-1.25.3\nginx.exe -s reload
+      
+      - name: Start Nginx with Correct Config
+        shell: pwsh
+        run: C:\nginx\nginx-1.25.3\nginx.exe -c C:\nginx\nginx-1.25.3\conf\nginx.conf
