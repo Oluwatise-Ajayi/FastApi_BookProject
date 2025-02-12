@@ -84,7 +84,7 @@ jobs:
           if (Test-Path -Path "C:\nginx\nginx-1.25.3\conf\nginx.conf") {
             Write-Output "✅ nginx.conf file exists."
           } else {
-            Write-Warning "⚠️ nginx.conf file NOT found! Creating a default configuration."
+            Write-Warning "⚠️ nginx.conf file NOT found here! Creating a default configuration."
             echo 'server { listen 80; server_name localhost; location / { root html; index index.html; } }' | Out-File -FilePath "C:\nginx\nginx-1.25.3\conf\nginx.conf"
           }
 
