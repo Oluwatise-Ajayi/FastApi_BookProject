@@ -50,21 +50,14 @@ jobs:
         working-directory: .github
         run: ./deploy_script.ps1
 
-      - name: Install Nginx
-        shell: pwsh
-        run: choco install nginx -y
+      - name: Download Nginx
+        run: Invoke-WebRequest -Uri "https://nginx.org/download/nginx-1.25.3.zip" -OutFile "nginx.zip"
 
-      - name: Find Nginx Path
-        run: Get-Command nginx -ErrorAction SilentlyContinue
+      - name: Extract Nginx
+        run: Expand-Archive -Path nginx.zip -DestinationPath C:\nginx
 
-      - name: Check Installed Packages
-        run: choco list --limit-output
-
-      - name: Add Nginx to PATH
-        run: echo "C:\tools\nginx-1.27.3" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
-
-      - name: Verify Nginx Installation
-        run: nginx -v
+      - name: Check Nginx Version
+        run: C:\nginx\nginx-1.25.3\nginx.exe -v
 
       - name: Update Nginx Configuration
         run: |
