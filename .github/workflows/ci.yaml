@@ -59,7 +59,10 @@ jobs:
 
       - name: Check Installed Packages
         run: choco list --limit-output
-        
+
+      - name: Find Nginx Installation Directory
+        run: Get-ChildItem -Path "C:\Program Files\", "C:\ProgramData\", "C:\" -Recurse -Include nginx.exe -ErrorAction SilentlyContinue
+
       - name: Add Nginx to PATH
         run: echo "C:\Program Files\nginx" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
