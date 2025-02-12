@@ -109,8 +109,8 @@ jobs:
             Write-Output "✅ nginx.conf file exists."
           } else {
             Write-Warning "⚠️ nginx.conf file NOT found! Creating a default configuration."
-            echo 'pid logs/nginx.pid;
-                  error_log logs/error.log;
+            echo "pid C:/nginx/nginx-1.25.3/logs/nginx.pid;
+                  error_log C:/nginx/nginx-1.25.3/logs/error.log;
                   events { worker_connections 1024; }
                   http {
                     server {
@@ -118,7 +118,7 @@ jobs:
                       server_name localhost;
                       location / { root html; index index.html; }
                     }
-                  }' | Out-File -FilePath "$nginxDir\conf\nginx.conf"
+                  }" | Out-File -FilePath "$nginxDir\conf\nginx.conf"
           }
 
       - name: Update Nginx Configuration & Reload
