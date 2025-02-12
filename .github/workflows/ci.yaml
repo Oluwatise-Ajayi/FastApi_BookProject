@@ -27,8 +27,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run tests
-        run: |
-          pytest  # This will execute the existing tests
+        run: pytest  # This will execute the existing tests
 
   deploy:
     runs-on: windows-latest
@@ -54,7 +53,16 @@ jobs:
         run: Invoke-WebRequest -Uri "https://nginx.org/download/nginx-1.25.3.zip" -OutFile "nginx.zip"
 
       - name: Extract Nginx
-        run: Expand-Archive -Path nginx.zip -DestinationPath C:\nginx
+        run: Expand-Archive -Path nginx.zip -DestinationPath C:\nginx -Force
+
+      - name: Ensure Nginx Extracted Correctly
+        shell: pwsh
+        run: |
+          if (Test-Path -Path "C:\nginx\nginx-1.25.3\") {
+            Write-Output "✅ Nginx extracted successfully."
+          } else {
+            Write-Error "❌ Nginx extraction failed."
+          }
 
       - name: Check Nginx Version
         run: C:\nginx\nginx-1.25.3\nginx.exe -v
@@ -62,28 +70,25 @@ jobs:
       - name: Ensure Nginx Directories Exist
         shell: pwsh
         run: |
-          if (!(Test-Path -Path "C:\nginx\logs")) {
-            New-Item -ItemType Directory -Path "C:\nginx\logs"
+          if (!(Test-Path -Path "C:\nginx\nginx-1.25.3\logs")) {
+            New-Item -ItemType Directory -Path "C:\nginx\nginx-1.25.3\logs"
           }
-          if (!(Test-Path -Path "C:\nginx\conf")) {
-            New-Item -ItemType Directory -Path "C:\nginx\conf"
+          if (!(Test-Path -Path "C:\nginx\nginx-1.25.3\conf")) {
+            New-Item -ItemType Directory -Path "C:\nginx\nginx-1.25.3\conf"
           }
-      
+
       - name: Debug Nginx Config Path
         shell: pwsh
         run: |
           if (Test-Path -Path "C:\nginx\nginx-1.25.3\conf\nginx.conf") {
-            Write-Output "✅ Source file exists."
+            Write-Output "✅ nginx.conf file exists."
           } else {
-            Write-Error "❌ Source file NOT found! Check if Nginx is installed correctly."
+            Write-Error "❌ nginx.conf file NOT found!"
           }
-      
+
       - name: Update Nginx Configuration
         shell: pwsh
         run: |
-          Copy-Item "C:\nginx\nginx-1.25.3\conf\nginx.conf" "C:\nginx\conf\nginx.conf" -Force 
+          Copy-Item -Path "C:\nginx\nginx-1.25.3\conf\nginx.conf" -Destination "C:\nginx\conf\nginx.conf" -Force
+          Start-Sleep -s 2
           C:\nginx\nginx-1.25.3\nginx.exe -s reload
-      
-      # - name: Start Nginx with Correct Config
-      #   shell: pwsh
-      #   run: C:\nginx\nginx-1.25.3\nginx.exe -c C:\nginx\nginx-1.25.3\conf\nginx.conf
