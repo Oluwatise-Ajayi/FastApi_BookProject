@@ -1,5 +1,21 @@
 # FastAPI Book Management API
 
+## Docker Instructions
+To build and run the Docker container for this FastAPI application, follow these steps:
+
+1. Build the Docker image:
+   ```bash
+   docker build -t fastapi-book .
+   ```
+
+2. Run the Docker container:
+   ```bash
+   docker run -d -p 8000:8000 fastapi-book
+   ```
+
+3. Access the application at `http://localhost:8000`.
+
+
 ## Overview
 
 This project is a RESTful API built with FastAPI for managing a book collection. It provides comprehensive CRUD (Create, Read, Update, Delete) operations for books with proper error handling, input validation, and documentation.
