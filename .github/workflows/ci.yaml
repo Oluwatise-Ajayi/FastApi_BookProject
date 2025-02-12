@@ -57,6 +57,9 @@ jobs:
       - name: Find Nginx Path
         run: Get-Command nginx -ErrorAction SilentlyContinue
 
+      - name: Check Installed Packages
+        run: choco list --local-only
+
       - name: Add Nginx to PATH
         run: echo "C:\Program Files\nginx" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
