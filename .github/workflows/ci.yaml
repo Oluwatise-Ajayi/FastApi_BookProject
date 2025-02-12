@@ -57,7 +57,7 @@ jobs:
       - name: Add Nginx to PATH
         shell: pwsh
         run: |
-          $env:Path += ";C:\nginx"
+          $env:Path += "C:\Users\user\Documents\nginx-1.26.3\nginx-1.26.3\nginx.exe"
           nginx -v  # Check if nginx is recognized
 
       - name: Update Nginx Configuration
