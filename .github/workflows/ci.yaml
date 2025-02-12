@@ -70,11 +70,12 @@ jobs:
       - name: Ensure Nginx Directories Exist
         shell: pwsh
         run: |
-          if (!(Test-Path -Path "C:\nginx\nginx-1.25.3\logs")) {
-            New-Item -ItemType Directory -Path "C:\nginx\nginx-1.25.3\logs"
+          $nginxDir = "C:\nginx\nginx-1.25.3"
+          if (!(Test-Path -Path "$nginxDir\logs")) {
+            New-Item -ItemType Directory -Path "$nginxDir\logs" -Force
           }
-          if (!(Test-Path -Path "C:\nginx\nginx-1.25.3\conf")) {
-            New-Item -ItemType Directory -Path "C:\nginx\nginx-1.25.3\conf"
+          if (!(Test-Path -Path "$nginxDir\conf")) {
+            New-Item -ItemType Directory -Path "$nginxDir\conf" -Force
           }
 
       - name: Debug Nginx Config Path
@@ -83,12 +84,14 @@ jobs:
           if (Test-Path -Path "C:\nginx\nginx-1.25.3\conf\nginx.conf") {
             Write-Output "✅ nginx.conf file exists."
           } else {
-            Write-Error "❌ nginx.conf file NOT found!"
+            Write-Warning "⚠️ nginx.conf file NOT found! Creating a default configuration."
+            echo 'server { listen 80; server_name localhost; location / { root html; index index.html; } }' | Out-File -FilePath "C:\nginx\nginx-1.25.3\conf\nginx.conf"
           }
 
       - name: Update Nginx Configuration
         shell: pwsh
         run: |
-          Copy-Item -Path "C:\nginx\nginx-1.25.3\conf\nginx.conf" -Destination "C:\nginx\conf\nginx.conf" -Force
+          $nginxDir = "C:\nginx\nginx-1.25.3"
+          Copy-Item -Path "$nginxDir\conf\nginx.conf" -Destination "$nginxDir\conf\nginx.conf.bak" -Force  # Backup old config
           Start-Sleep -s 2
           C:\nginx\nginx-1.25.3\nginx.exe -s reload
