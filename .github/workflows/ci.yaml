@@ -121,14 +121,14 @@ jobs:
                   }" | Out-File -FilePath "$nginxDir\conf\nginx.conf"
           }
 
-      - name: Update Nginx Configuration & Reload
-        shell: pwsh
-        run: |
-          $nginxDir = "C:\nginx\nginx-1.25.3"
-          Write-Output "🔄 Backing up old configuration..."
-          Copy-Item -Path "$nginxDir\conf\nginx.conf" -Destination "$nginxDir\conf\nginx.conf.bak" -Force
+      # - name: Update Nginx Configuration & Reload
+      #   shell: pwsh
+      #   run: |
+      #     $nginxDir = "C:\nginx\nginx-1.25.3"
+      #     Write-Output "🔄 Backing up old configuration..."
+      #     Copy-Item -Path "$nginxDir\conf\nginx.conf" -Destination "$nginxDir\conf\nginx.conf.bak" -Force
           
-          Start-Sleep -s 2
+      #     Start-Sleep -s 2
           
-          Write-Output "♻️ Reloading Nginx..."
-          & "$nginxDir\nginx.exe" -c "$nginxDir\conf\nginx.conf" -s reload
+      #     Write-Output "♻️ Reloading Nginx..."
+      #     & "$nginxDir\nginx.exe" -c "$nginxDir\conf\nginx.conf" -s reload
