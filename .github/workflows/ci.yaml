@@ -50,23 +50,23 @@ jobs:
         working-directory: .github
         run: ./deploy_script.ps1
 
-      # - name: Install Nginx
-      #   shell: pwsh
-      #   run: choco install nginx -y
+      - name: Install Nginx
+        shell: pwsh
+        run: choco install nginx -y
 
-      # - name: Find Nginx Path
-      #   run: Get-Command nginx -ErrorAction SilentlyContinue
+      - name: Find Nginx Path
+        run: Get-Command nginx -ErrorAction SilentlyContinue
 
-      # - name: Check Installed Packages
-      #   run: choco list --limit-output
+      - name: Check Installed Packages
+        run: choco list --limit-output
 
-      # - name: Add Nginx to PATH
-      #   run: echo "C:\ProgramData\chocolatey\bin\nginx.exe" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
+      - name: Add Nginx to PATH
+        run: echo "C:\tools\nginx-1.27.3" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
-      # - name: Verify Nginx Installation
-      #   run: nginx -v
+      - name: Verify Nginx Installation
+        run: nginx -v
 
-      # - name: Update Nginx Configuration
-      #   run: |
-      #     # Update Nginx configuration if needed
-      #       powershell -ExecutionPolicy Bypass -Command "Copy-Item 'C:\Users\user\Documents\nginx-1.26.3\nginx-1.26.3\conf\nginx.conf' 'C:\nginx\conf\nginx.conf' -Force; nginx -s reload"
+      - name: Update Nginx Configuration
+        run: |
+          # Update Nginx configuration if needed
+            powershell -ExecutionPolicy Bypass -Command "Copy-Item 'C:\Users\user\Documents\nginx-1.26.3\nginx-1.26.3\conf\nginx.conf' 'C:\nginx\conf\nginx.conf' -Force; nginx -s reload"
