@@ -88,9 +88,9 @@ jobs:
             echo 'server { listen 80; server_name localhost; location / { root html; index index.html; } }' | Out-File -FilePath "C:\nginx\nginx-1.25.3\conf\nginx.conf"
           }
 
-          - name: Fix Nginx Error Log Issue
-          shell: pwsh
-          run: |
+      - name: Fix Nginx Error Log Issue
+        shell: pwsh
+        run: |
             $nginxDir = "C:\nginx\nginx-1.25.3"
             New-Item -ItemType File -Path "$nginxDir\logs\error.log" -Force | Out-Null
             Write-Output "✅ Ensured error log file exists."
