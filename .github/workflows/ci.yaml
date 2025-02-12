@@ -58,8 +58,8 @@ jobs:
         run: Get-Command nginx -ErrorAction SilentlyContinue
 
       - name: Check Installed Packages
-        run: choco list --local-only
-
+        run: choco list --limit-output
+        
       - name: Add Nginx to PATH
         run: echo "C:\Program Files\nginx" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8
 
