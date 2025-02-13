@@ -77,8 +77,8 @@ uvicorn main:app
 
 2. Access the API documentation:
 
-- Swagger UI: http://localhost:3000/docs
-- ReDoc: http://localhost:3000/redoc
+- Swagger UI: http://localhost:8000/docs
+- ReDoc: http://localhost:8000/redoc
 
 ## Docker Instructions
 To build and run the Docker container for this FastAPI application, follow these steps:
@@ -94,20 +94,6 @@ To build and run the Docker container for this FastAPI application, follow these
    ```
 
 3. Access the application at `http://localhost:8000`.
-
-## Deployment Instructions
-To deploy the application, follow these steps:
-
-1. Navigate to the project directory:
-
-```bash
-cd path/to/fastapi-book-project
-```
-
-2. Run the deployment script: 
-
-```bash
-powershell -ExecutionPolicy Bypass -File deploy_script.ps1
 ```
 
 ## API Endpoints

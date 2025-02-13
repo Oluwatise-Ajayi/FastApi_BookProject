@@ -4,3 +4,4 @@ venv/
 .git/
 *.log
 *.env
+*.pyo
