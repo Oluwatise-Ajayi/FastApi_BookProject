@@ -16,21 +16,14 @@ jobs:
     - name: Set up SSH
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        HOST: 16.170.224.134
-        USER: ${{ secrets.EC2_USER }}
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
         chmod 600 private_key.pem
-
-    - name: Debug SSH Variables
-      run: |
-          echo "User: ${{ secrets.EC2_USER }}"
-          echo "Host: ${{ secrets.EC2_HOST }}"
   
     - name: Copy files to EC2
       run: |
-          rsync -avz --exclude='.git' -e "ssh -o StrictHostKeyChecking=no -i private_key.pem" . $USER@$HOST:/home/ubuntu/fastapi-book-project
+          rsync -avz --exclude='.git' -e "ssh -o StrictHostKeyChecking=no -i private_key.pem" . ubuntu@16.170.224.134:/home/ubuntu/fastapi-book-project
 
     - name: Deploy on EC2
       run: |
-        ssh -o StrictHostKeyChecking=no -i private_key.pem $USER@$HOST "cd /home/ubuntu/fastapi-book-project && docker build -t fastapi-app . && docker run -d -p 8000:8000 fastapi-app"
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@16.170.224.134"cd /home/ubuntu/fastapi-book-project && docker build -t fastapi-app . && docker run -d -p 8000:8000 fastapi-app"
