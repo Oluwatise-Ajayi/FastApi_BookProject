@@ -16,7 +16,7 @@ jobs:
     - name: Set up SSH
       env:
         PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-        HOST: ${{ secrets.EC2_HOST }}
+        HOST: 16.170.224.134
         USER: ${{ secrets.EC2_USER }}
       run: |
         echo "$PRIVATE_KEY" > private_key.pem
@@ -26,11 +26,6 @@ jobs:
       run: |
           echo "User: ${{ secrets.EC2_USER }}"
           echo "Host: ${{ secrets.EC2_HOST }}"
-
-    - name: Print Host variable
-      run: |
-          echo "HOST: $HOST"
-          echo "USER: $USER"
   
     - name: Copy files to EC2
       run: |
