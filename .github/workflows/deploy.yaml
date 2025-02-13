@@ -26,4 +26,4 @@ jobs:
 
     - name: Deploy on EC2
       run: |
-        ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@16.170.224.134 "cd /home/ubuntu/fastapi-book-project && docker build -t fastapi-app . && docker run -d -p 8000:8000 fastapi-app"
+        ssh -o StrictHostKeyChecking=no -i private_key.pem ubuntu@16.170.224.134 "cd /home/ubuntu/fastapi-book-project && sudo docker build -t fastapi-app . && sudo docker run -d -p 8000:8000 fastapi-app"
