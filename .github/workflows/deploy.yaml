@@ -26,6 +26,10 @@ jobs:
       run: |
           echo "User: ${{ secrets.EC2_USER }}"
           echo "Host: ${{ secrets.EC2_HOST }}"
+
+    - name: Print Host variable
+      run: |
+          echo "HOST: $HOST"
   
     - name: Copy files to EC2
       run: |
