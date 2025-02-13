@@ -30,6 +30,7 @@ jobs:
     - name: Print Host variable
       run: |
           echo "HOST: $HOST"
+          echo "USER: $USER"
   
     - name: Copy files to EC2
       run: |
